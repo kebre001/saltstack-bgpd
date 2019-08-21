@@ -1,7 +1,7 @@
 import salt
 import re
 
-RE_NEIGHBORS = 'BGP neighbor is (.+), remote AS (\d+)\n Description: (.+)\n.+ router-id (.+)\n  BGP state = (\w+), (\w+) for (.+)\n.+\n.*\n.*\n.*\n.*\n\n.*Message statistics:\n.*\n  (\w+)\s+(\d+)\s+(\d+)\n\s+(\w+)\s+(\d+)\s+(\d+)\n\s+(\w+)\s+(\d+)\s+(\d+)\n\s+(\w+)\s+(\w+)\s+(\w+)\n\s+(\w+\s\w+)\s+(\w+)\s+(\d+)\n\s+(\w+)\s+(\d+)\s+(\d+)\n\n.*\n.*\n\s+(\w+)\s+(\d+)\s+(\d+)\n\s+(\w+)\s+(\d+)\s+(\d+)\n\s+(\w+-\w+-\w+)\s+(\d+)\s+(\d+)\n\n\s+(\w+ \w+):\s+(.+), (\w+ \w+):\s+(\d+)\n\s+(\w+ \w+):\s+(.+), (\w+ \w+):\s+(\d+)\n'
+RE_NEIGHBORS = 'BGP neighbor is (.+), remote AS (\d+)\n(?: Description: (.+)\n)?.+ router-id (.+)\n  BGP state = (\w+)(?:, (\w+) for (.+))?(?:\n.+\n\n|\n.+\n.+\n.+\n.+\n.+\n\n)  Message statistics:\n.+\n  (Opens)\s+(\d+)\s+(\d+)\n\s+(Notifications)\s+(\d+)\s+(\d+)\n\s+(Updates)\s+(\d+)\s+(\d+)\n\s+(Keepalives)\s+(\d+)\s+(\d+)\n\s+(Route Refresh)\s+(\d+)\s+(\d+)\n.+(Total)\s+(\d+)\s+(\d+)\n\n.+\n.+\n.*(Updates)\s+(\d+)\s+(\d+)\n\s+(Withdraws)\s+(\d+)\s+(\d+)\n\s+(End-of-Rib)\s+(\d+)\s+(\d)\n\n\s+(Local host):\s+(.*),\s(Local port):\s+(\d+)\n\s+(Remote host):\s+(.*),\s(Remote port):\s+(\d+)'
 
 def show():
     return __salt__['cmd.run']('bgpctl show') 
